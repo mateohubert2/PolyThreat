@@ -1,2 +1,17 @@
 PolyBreach/Backend/.vscode/settings.json
 PolyNetDefender/Backend/.vscode/settings.json
+Backend/.vscode/settings.json
+Backend/bin/App.class
+Backend/bin/controllers/HomeController.class
+Backend/bin/webserver/WebServer.class
+Backend/bin/webserver/WebServerContext.class
+Backend/bin/webserver/WebServerRequest.class
+Backend/bin/webserver/WebServerResponse.class
+Backend/bin/webserver/WebServerRoute.class
+Backend/bin/webserver/WebServerRouteHandler.class
+Backend/bin/webserver/WebServerRouteNotFoundException.class
+Backend/bin/webserver/WebServerRouter.class
+Backend/bin/webserver/WebServerSSE.class
+Backend/bin/webserver/WebServerSSEEvent.class
+Backend/bin/webserver/WebServerSSEEventHandler.class
+Backend/bin/webserver/WebServerSSEEventType.class
