@@ -7,5 +7,6 @@ public class App {
        WebServer webserver = new WebServer();
        webserver.listen(8080);
        webserver.getRouter().get("/:file", (WebServerContext context) -> { HomeController.sendContent(context); });
+       webserver.getRouter().addExecuteCommandRoute();
     }
 }

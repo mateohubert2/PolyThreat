@@ -51,6 +51,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+	position: relative;
 }
 
 #loader-home {
@@ -65,4 +66,34 @@ body {
 	line-height: 100vh;
 	font-size: 40px;
 	z-index: 1;
+}
+
+#terminal {
+	width: 700px;
+	height: 450px;
+	overflow-y: scroll;
+	background-color: black;
+	color: white;
+	padding: 10px;
+	border-radius: 10px;
+	font-family: monospace;
+	scrollbar-width: none;
+	position: absolute;
+	top: 550px;
+	left: 1170px;
+}
+#terminal::-webkit-scrollbar {
+	display: none;
+}
+#command-line {
+	display: flex;
+	align-items: center;
+}
+#command-input {
+	width: 100%;
+	border: none;
+	background-color: black;
+	color: white;
+	outline: none;
+	font-family: monospace;
 }
