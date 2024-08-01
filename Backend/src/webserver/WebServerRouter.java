@@ -1,8 +1,6 @@
 package webserver;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.ArrayList;
 
 public class WebServerRouter {
@@ -48,43 +46,68 @@ public class WebServerRouter {
     public void addExecuteCommandRoute() {
         this.post("/execute", (WebServerContext context) -> {
             WebServerRequest request = context.getRequest();
-            String command = request.extractBody(CommandRequest.class).getCommand();
-            String response = executeCommand(command);
+            CommandRequest commandRequest = request.extractBody(CommandRequest.class);
+            String response = executeCommand(commandRequest.getCommand(), commandRequest.getInput());
             context.getResponse().ok(response);
         });
     }
 
-    private String executeCommand(String command) {
+    private String executeCommand(String command, String input) {
         StringBuilder output = new StringBuilder();
         try {
-            if (command.startsWith("cd ")) {
-                String newDir = command.substring(3).trim();
-                if (newDir.equals("..")) {
-                    currentDirectory = Paths.get(currentDirectory).getParent().toString();
-                } else {
-                    currentDirectory = Paths.get(currentDirectory, newDir).toString();
+            if (command.startsWith("sudo")) {
+                output.append("Error: 'sudo' commands are not supported.\n");
+            } else if (command.startsWith("cd ")) {
+                String[] parts = command.split(" ", 2);
+                String newDir = parts.length > 1 ? parts[1] : System.getProperty("user.home");
+                File newDirFile = new File(newDir);
+    
+                if (!newDirFile.isAbsolute()) {
+                    newDirFile = new File(currentDirectory, newDir);
                 }
+    
+                if (newDirFile.isDirectory()) {
+                    currentDirectory = newDirFile.getAbsolutePath();
+                    output.append("Changed directory to ").append(currentDirectory).append("\n");
+                } else {
+                    output.append("Error: Not a valid directory.\n");
+                }
+            } else if (command.equals("cd") || command.equals("cd ~")) {
+                currentDirectory = System.getProperty("user.home");
                 output.append("Changed directory to ").append(currentDirectory).append("\n");
             } else {
                 ProcessBuilder builder = new ProcessBuilder("bash", "-c", command);
-                builder.directory(new java.io.File(currentDirectory));
+                builder.directory(new File(currentDirectory));
                 Process process = builder.start();
+    
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+    
                 String line;
                 while ((line = reader.readLine()) != null) {
                     output.append(line).append("\n");
                 }
+    
+                while ((line = errorReader.readLine()) != null) {
+                    output.append(line).append("\n");
+                }
+    
+                writer.close();
                 reader.close();
+                errorReader.close();
                 process.waitFor();
             }
         } catch (Exception e) {
-            output.append("Error: ").append(e.getMessage());
+            output.append("Error: ").append(e.getMessage()).append("\n");
         }
         return output.toString();
     }
+       
 
     static class CommandRequest {
         private String command;
+        private String input;
 
         public String getCommand() {
             return command;
@@ -92,6 +115,14 @@ public class WebServerRouter {
 
         public void setCommand(String command) {
             this.command = command;
+        }
+
+        public String getInput() {
+            return input;
+        }
+
+        public void setInput(String input) {
+            this.input = input;
         }
     }
 }

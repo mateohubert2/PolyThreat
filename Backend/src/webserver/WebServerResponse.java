@@ -64,7 +64,7 @@ public class WebServerResponse {
         }
         System.out.println(fileName);
         try {
-            inputStream = new FileInputStream("../Frontend/" + fileName);
+            inputStream = new FileInputStream("/home/azymut/Desktop/4A/PolyThreat/Frontend/" + fileName);
         } catch (FileNotFoundException e) {
             System.err.println(e.getMessage());
         }
