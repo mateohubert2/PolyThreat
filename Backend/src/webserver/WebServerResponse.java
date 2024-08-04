@@ -145,7 +145,7 @@ public class WebServerResponse {
         }
         catch(Exception e)
         {
-
+            System.err.println(e.getMessage());
         }
 
         return this.exchange.getResponseBody();

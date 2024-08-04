@@ -1,4 +1,4 @@
-function run() {
+function run(){
     document.getElementById("home").addEventListener("click", () => {
         document.getElementById("loader-home").style.display = "block";
         setTimeout(function() {
