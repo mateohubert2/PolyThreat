@@ -18,7 +18,6 @@ function run(){
 
 async function check(){
     const connectID = localStorage.getItem("connectID");
-    console.log(connectID);
     const response = await fetch("http://localhost:8080/verifyconnectid", {
         method: "POST",
         headers: {

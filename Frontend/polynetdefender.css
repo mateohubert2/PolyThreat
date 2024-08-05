@@ -52,6 +52,7 @@ body {
     justify-content: center;
     align-items: center;
 	position: relative;
+	z-index: 5;
 }
 
 #loader-home {
@@ -82,13 +83,16 @@ body {
 	top: 550px;
 	left: 1170px;
 }
+
 #terminal::-webkit-scrollbar {
 	display: none;
 }
+
 #command-line {
 	display: flex;
 	align-items: center;
 }
+
 #command-input {
 	width: 100%;
 	border: none;
@@ -96,4 +100,22 @@ body {
 	color: white;
 	outline: none;
 	font-family: monospace;
+}
+
+.info-box {
+    position: absolute;
+    top: 60px;
+    right: 200px;
+    background-color: #9500b3;
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    text-align: center;
+}
+
+.info-box h1 {
+    margin: 0;
+    font-size: 24px;
 }

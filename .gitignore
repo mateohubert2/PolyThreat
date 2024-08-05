@@ -17,3 +17,4 @@ Backend/bin/webserver/WebServerSSEEventHandler.class
 Backend/bin/webserver/WebServerSSEEventType.class
 Backend/bin/webserver/WebServerRouter$CommandRequest.class
 Backend/bin/controllers/LoginController.class
+Backend/bin/controllers/ScriptsController.class
